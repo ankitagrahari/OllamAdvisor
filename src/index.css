@@ -1,0 +1,167 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Fonts ──────────────────────────────────────────────────────────── */
+:root {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* ─── Base ───────────────────────────────────────────────────────────── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 15px; }
+
+body {
+  background: #09090b;
+  color: #fafafa;
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ─── Layered background ─────────────────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 65% 55% at 12% 28%,  rgba(249,115,22,0.055) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 45% at 88% 72%,  rgba(99,102,241,0.03)  0%, transparent 65%),
+    radial-gradient(ellipse 40% 40% at 50% 100%, rgba(249,115,22,0.02)  0%, transparent 70%);
+  animation: bg-flow 28s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#root { position: relative; z-index: 1; }
+
+/* ─── Scrollbar ──────────────────────────────────────────────────────── */
+::-webkit-scrollbar              { width: 5px; }
+::-webkit-scrollbar-track        { background: transparent; }
+::-webkit-scrollbar-thumb        { background: #3f3f46; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover  { background: #52525b; }
+
+/* ─── Range sliders ──────────────────────────────────────────────────── */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 3px;
+  background: #27272a;
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 17px;
+  height: 17px;
+  background: #f97316;
+  border-radius: 50%;
+  border: 2px solid #09090b;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.3);
+  box-shadow: 0 0 0 5px rgba(249,115,22,0.18);
+}
+
+input[type="range"]:focus::-webkit-slider-thumb {
+  box-shadow: 0 0 0 5px rgba(249,115,22,0.25);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 17px;
+  height: 17px;
+  background: #f97316;
+  border-radius: 50%;
+  border: 2px solid #09090b;
+  cursor: pointer;
+}
+
+/* ─── Memory bar segments ────────────────────────────────────────────── */
+.seg-transition {
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Value flash animation ──────────────────────────────────────────── */
+@keyframes value-flash {
+  0%   { color: #f97316; }
+  100% { color: inherit; }
+}
+.value-changed { animation: value-flash 0.4s ease-out; }
+
+/* ─── Card stagger delays ────────────────────────────────────────────── */
+.stagger-1 { animation-delay: 0ms; }
+.stagger-2 { animation-delay: 80ms; }
+.stagger-3 { animation-delay: 160ms; }
+.stagger-4 { animation-delay: 240ms; }
+
+/* ─── Tab underline ──────────────────────────────────────────────────── */
+.tab-active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #f97316;
+}
+
+/* ─── Score dots ─────────────────────────────────────────────────────── */
+.score-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  transition: background 0.3s ease;
+}
+
+/* ─── Glow on best pick ──────────────────────────────────────────────── */
+.card-best {
+  box-shadow: 0 0 0 1px rgba(249,115,22,0.3), 0 8px 32px rgba(249,115,22,0.06);
+}
+
+/* ─── Copy flash ─────────────────────────────────────────────────────── */
+@keyframes copy-flash {
+  0%   { background: rgba(34,197,94,0.15); }
+  100% { background: transparent; }
+}
+.copy-flash { animation: copy-flash 0.6s ease-out; }
+
+/* ─── Analyzing shimmer ──────────────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+.shimmer {
+  background: linear-gradient(90deg, #27272a 25%, #3f3f46 50%, #27272a 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+/* ─── Section divider ────────────────────────────────────────────────── */
+.section-fade {
+  background: linear-gradient(180deg, transparent, #27272a 50%, transparent);
+}
+
+/* ─── Mobile tweaks ──────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  html { font-size: 14px; }
+}

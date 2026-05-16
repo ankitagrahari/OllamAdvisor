@@ -1,0 +1,16 @@
+services:
+  ollama-advisor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ollama-advisor:latest
+    container_name: ollama-advisor
+    ports:
+      - "3000:80"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
